@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Grammar Kingdom: Sentence Siege — v1.7 Royal Finale</title>
+<title>Grammar Kingdom: Sentence Siege — v1.7.2 World Map & Mobile</title>
 <style>
 :root{color-scheme:dark;--gold:#f6cd71;--navy:#1c213b;--paper:#f8e5b6;--ink:#33251d;--purple:#7824a6}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0d1328;color:#fff;font-family:Trebuchet MS,Arial,sans-serif;overflow:hidden}
@@ -57,9 +57,100 @@ select{background:#fff6df;border:3px solid #97612c;border-radius:8px;padding:10p
 #toast{position:absolute;left:50%;top:19%;transform:translateX(-50%) translateY(-8px);pointer-events:none;color:#ffe47b;font-size:clamp(17px,2.4vw,30px);font-weight:900;text-shadow:0 3px #27162e,2px 2px #27162e,0 0 9px #000;opacity:0;transition:opacity .2s,transform .2s;white-space:nowrap}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 #sr-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 @media(max-height:550px){.panel{padding:9px 13px;border-width:4px}h1,h2{margin:1px 0 5px;font-size:22px}p{margin:4px 0 7px;font-size:12px}.controls{margin:5px auto}.info{padding:7px;font-size:12px}.answer{min-height:38px}.sentence{padding:6px;font-size:16px}.answerGrid{gap:5px;margin:5px 0}.button{min-height:34px;padding:6px 12px}}
+
+/* v1.7.2 — illustrated space around the 16:9 game, without modifying the battle art. */
+body::before{content:"";position:fixed;inset:-32px;z-index:0;background:linear-gradient(180deg,rgba(8,14,32,.64),rgba(33,16,55,.67)),url('assets/battlefield.png') center center / cover no-repeat;filter:blur(16px) saturate(1.15);pointer-events:none}
+body::after{content:"";position:fixed;inset:0;z-index:0;background:repeating-linear-gradient(135deg,transparent 0 23px,rgba(243,190,78,.07) 24px 27px,transparent 28px 45px);pointer-events:none}
+#game{z-index:2;border-radius:3px;box-shadow:0 0 0 4px #b78144,0 0 0 9px #35213e,0 10px 60px #040612cc}
+.surroundBrand{position:fixed;z-index:1;pointer-events:none;left:50%;transform:translateX(-50%);text-align:center;text-transform:uppercase;font-weight:900;letter-spacing:.16em;color:#ffdd89;text-shadow:0 2px #26132c,0 3px 8px #000;width:min(95vw,960px);font-size:clamp(11px,1.4vw,17px)}
+#surroundTop{top:9px}#surroundBottom{bottom:9px}
+/* World selector remains one fixed-height screen even when 50 missions exist. */
+.menuPanel{width:min(1030px,97%);max-height:97%;overflow:hidden;padding:clamp(10px,1.4vw,18px);display:flex;flex-direction:column;gap:7px}
+.menuPanel .menuHeading{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left}
+.menuPanel .menuHeading h1{font-size:clamp(23px,2.5vw,33px);margin:2px 0 0;line-height:1.02}
+.menuPanel .menuHeading p{font-size:13px;line-height:1.28;margin:4px 0 0}
+.menuPanel .menuHeading .crest{font-size:34px;filter:drop-shadow(0 2px #ad7b40);flex:none;color:#63386b}
+.worldTabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:3px 0 1px}
+.worldTab{position:relative;min-width:0;border:2px solid #b08952;border-radius:9px;background:linear-gradient(#fff8e3,#d9bc84);color:#49301f;padding:6px 4px;cursor:pointer;font-family:inherit;text-align:center;min-height:53px}
+.worldTab b{display:block;font:900 clamp(12px,1.16vw,16px) Georgia,serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.worldTab small{display:block;font-size:clamp(9px,.78vw,11px);color:#5c4752;font-weight:800;line-height:1.3}
+.worldTab.active{background:linear-gradient(#74348c,#4e235f);border-color:#eacb6b;color:white;box-shadow:inset 0 0 0 2px #a969b9}
+.worldTab.active small{color:#f0cfef}.worldTab:disabled{cursor:default;opacity:.66;filter:saturate(.65)}
+.menuColumns{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(240px,.92fr);gap:10px;min-height:0;flex:1;text-align:left}
+.menuMissions{min-height:0;display:flex;flex-direction:column;padding:8px;border:2px solid #b38c58;border-radius:9px;background:rgba(255,247,222,.63)}
+.menuSectionLabel{display:flex;justify-content:space-between;gap:6px;align-items:center;font-weight:900;font-size:13px;color:#65402e;padding:2px 2px 7px}
+.menuPanel .campaignChoices{max-height:none;overflow:visible;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,minmax(0,1fr));gap:5px;flex:1;min-height:0}
+.menuPanel .campaignTile{height:100%;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:4px 7px;border-width:2px;border-radius:7px;outline-offset:-3px}
+.menuPanel .campaignTile strong{font-size:clamp(13px,1.16vw,16px);line-height:1.05;margin:0;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.menuPanel .campaignTile small{font-size:10px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menuPanel .miniReward{padding:1px 6px;font-size:9px;align-self:flex-start}
+.menuSide{min-height:0;display:flex;flex-direction:column;gap:7px}
+.menuSide .selectedMission{border:2px solid #bb8b4c;border-radius:9px;background:linear-gradient(135deg,#fff8e7,#efce92);padding:10px 11px;flex:1;min-height:0}
+.menuSide .selectedMission h2{font-size:clamp(20px,2vw,26px);line-height:1.04;margin:5px 0}
+.menuSide .selectedMission p{font-size:clamp(12px,1.1vw,14px);line-height:1.25;margin:6px 0}
+.menuSide .selectedMission .missionTitle{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:900;color:#633789}
+.menuSide .playSettings{display:flex;align-items:center;gap:7px;justify-content:space-between}
+.menuSide select{min-width:0;max-width:135px;font-size:13px;padding:6px}
+.menuSide .button{min-height:37px;font-size:14px;padding:7px 9px}
+.menuSide #start{width:100%;font-size:17px;min-height:48px}
+.menuFoot{display:flex;align-items:center;gap:8px;justify-content:space-between;font-size:11px;line-height:1.25;color:#633f2c}
+.menuFoot button{border:1px solid #ad7d40;color:#59342b;background:#f9e4b8;border-radius:7px;font-weight:900;padding:5px 9px;cursor:pointer;white-space:nowrap}
+.menuFoot .helpFold{position:relative;flex:1;text-align:left}
+.menuFoot .helpFold summary{cursor:pointer;color:#552b78;font-weight:900;list-style:none}
+.menuFoot .helpFold summary::before{content:'▸ ';color:#71429e}
+.menuFoot .helpFold[open] summary::before{content:'▾ '}
+.menuFoot .helpFold .helpContents{position:absolute;z-index:5;bottom:calc(100% + 7px);left:0;width:min(500px,78vw);padding:11px 14px;border:3px solid #b88c49;background:#fff6df;box-shadow:0 10px 26px #33221c55;border-radius:8px;font-size:12px;line-height:1.35;color:#3d2b22}
+.menuPanel .missionLockedMsg{font-size:13px;color:#693f34;font-weight:800}
+@media(max-height:600px){.menuPanel{gap:4px;padding:7px 10px}.menuPanel .menuHeading h1{font-size:22px}.menuPanel .menuHeading p{font-size:11px;margin:2px 0}.worldTab{min-height:42px;padding:2px}.menuPanel .campaignTile small{display:none}.menuPanel .campaignTile strong{font-size:12px}.menuPanel .selectedMission p{font-size:11px;line-height:1.2;margin:4px 0}.menuSide .selectedMission{padding:6px 8px}.menuSide #start{min-height:38px;font-size:13px}.menuFoot{font-size:10px}.menuPanel .miniReward{font-size:8px}}
+@media(max-width:700px){.menuPanel{width:99%;padding:8px}.menuColumns{grid-template-columns:minmax(0,1.7fr) minmax(190px,1fr);gap:6px}.worldTabs{gap:3px}.worldTab b{font-size:11px}.worldTab small{font-size:8px}.menuPanel .campaignTile strong{font-size:12px}.menuPanel .campaignTile{padding:2px 4px}.menuPanel .selectedMission{padding:6px}.menuSide .selectedMission h2{font-size:16px}.menuSide .selectedMission p{font-size:11px}.menuSide .playSettings{gap:3px}.menuSide select{max-width:100px;font-size:11px}}
+/* Landscape is supported without orientation locking. Where permitted, users may request fullscreen + landscape. */
+#orientationGate{display:none;position:fixed;z-index:90;inset:0;padding:24px;background:linear-gradient(#172544,#291f49);color:#fff6d5;text-align:center;align-items:center;justify-content:center;flex-direction:column;gap:15px}
+#orientationGate .turnIcon{font-size:58px;color:#eaca75;transform:rotate(-90deg)}
+#orientationGate strong{font:900 28px Georgia,serif;color:#ffe6a0}
+#orientationGate p{max-width:370px;line-height:1.4;margin:0}
+#orientationGate button{font:bold 17px Trebuchet MS,Arial,sans-serif;color:#fff;background:linear-gradient(#a94acb,#6a2d8a);border:2px solid #efc46b;border-radius:9px;padding:12px 18px;min-height:44px}
+#orientationGate button.secondary{background:transparent;border:1px solid #bda3d0;font-size:13px}
+@media (pointer:coarse) and (orientation:portrait) and (max-width:850px){#orientationGate:not(.dismissed){display:flex}}
+
+/* On small landscape phones, compress non-essential copy rather than overlapping controls. */
+@media (orientation:landscape) and (max-height:500px){
+  .menuPanel{padding:5px 8px;gap:3px;max-height:99%;}
+  .menuPanel .menuHeading{gap:5px;}
+  .menuPanel .menuHeading h1{font-size:19px;margin:0;line-height:1.05;}
+  .menuPanel .menuHeading .eyebrow{font-size:9px;letter-spacing:.09em;}
+  .menuPanel .menuHeading p,.menuPanel .menuHeading .crest{display:none;}
+  .menuPanel .worldTabs{margin:0;gap:4px;}
+  .menuPanel .worldTab{height:35px;min-height:35px;padding:1px 3px;}
+  .menuPanel .worldTab b{font-size:11px;}
+  .menuPanel .worldTab small{font-size:9px;}
+  .menuPanel .menuColumns{grid-template-columns:minmax(0,1.55fr) minmax(195px,1fr);gap:6px;}
+  .menuPanel .menuMissions{padding:4px 6px;}
+  .menuPanel .menuSectionLabel{padding-bottom:2px;font-size:10px;}
+  .menuPanel .campaignChoices{gap:3px;}
+  .menuPanel .campaignTile{padding:1px 4px;gap:0;justify-content:center;}
+  .menuPanel .campaignTile .miniReward{display:none;}
+  .menuPanel .campaignTile strong{font:900 12px Trebuchet MS,Arial,sans-serif;line-height:1.1;}
+  .menuSide{gap:3px;justify-content:space-between;}
+  .menuSide .selectedMission{height:55px;flex:0 0 auto;overflow:hidden;padding:4px 7px;}
+  .menuSide .selectedMission .missionTitle{font-size:9px;letter-spacing:0;}
+  .menuSide .selectedMission h2{font-size:14px;margin:1px 0;}
+  .menuSide .selectedMission p{display:none;}
+  .menuSide .playSettings{flex:0 0 auto;gap:3px;}
+  .menuSide .playSettings label{font-size:11px;white-space:nowrap;}
+  .menuSide select{font-size:11px;padding:3px 2px;max-width:98px;border-width:2px;}
+  .menuSide .button{min-height:27px;padding:3px 5px;font-size:11px;border-width:2px;}
+  .menuSide #start{min-height:36px;flex:0 0 auto;font-size:13px;}
+  .menuPanel .menuFoot{font-size:9px;}
+  .menuPanel .menuFoot button{font-size:10px;padding:2px 5px;}
+  .menuFoot .helpFold .helpContents{font-size:11px;}
+}
+
 </style>
 </head>
 <body>
+<div class="surroundBrand" id="surroundTop" aria-hidden="true">✦ The Royal Courtyard ✦</div>
+<div class="surroundBrand" id="surroundBottom" aria-hidden="true">Defend · Discover · Master Grammar</div>
+<div id="orientationGate" role="dialog" aria-label="Landscape play recommended"><div class="turnIcon" aria-hidden="true">▣</div><strong>Turn Your Device Sideways</strong><p>Grammar Kingdom uses a wide battlefield. Rotate to landscape for larger defenders, clearer questions, and easier tapping.</p><button id="rotateFull">Try landscape fullscreen</button><button id="rotateSkip" class="secondary">Continue in portrait anyway</button><small id="orientationHint">Your phone controls physical rotation; not every browser supports locking it.</small></div>
 <main id="game" aria-label="Grammar Kingdom: Sentence Siege game">
 <canvas id="screen" tabindex="0" width="1672" height="941" aria-label="Tower defense battlefield. Select defender cards, then click an open grassy tile to deploy them."></canvas>
 <div id="toast" aria-hidden="true"></div>
@@ -214,23 +305,53 @@ try{questionHistory=JSON.parse(localStorage.getItem(historyKey)||'{}')||{}}catch
 function qIdentity(q){let s=q[1]+'|'+q[2]+'|'+q[3].join('~');let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0).toString(36)}
 function shuffleArray(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function saveQuestionHistory(){try{localStorage.setItem(historyKey,JSON.stringify(questionHistory))}catch{}}
-let game=null,mode='menu',grade='5',sel=0,hover=null,canvasHover=null,question=null,questionAnswered=false,answerAttempt=-1,order=[],qPos=0;
+let game=null,mode='menu',grade=(()=>{try{const v=localStorage.getItem('gk_practice_grade');return ['foundations','5','6','7','8'].includes(v)?v:'5'}catch{return '5'}})(),sel=0,hover=null,canvasHover=null,question=null,questionAnswered=false,answerAttempt=-1,order=[],qPos=0;
 let soundOn=false,audio=null,prevTime=performance.now(),animT=0,lastToast=0,toastTimer=0;
 function save(){try{localStorage.setItem(storeKey,JSON.stringify(record))}catch{}}
 function clickSound(freq=660,len=.08,type='square',gain=.035){if(!soundOn)return;try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();let osc=audio.createOscillator(),vol=audio.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,audio.currentTime);osc.frequency.exponentialRampToValueAtTime(Math.max(80,freq*.55),audio.currentTime+len);vol.gain.setValueAtTime(gain,audio.currentTime);vol.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+len);osc.connect(vol);vol.connect(audio.destination);osc.start();osc.stop(audio.currentTime+len+.02)}catch{}}
 function toast(s){toastEl.textContent=s;toastEl.classList.add('show');lastToast=performance.now();statusEl.textContent=s}
 function hideOverlay(){overlay.classList.add('hidden');overlay.innerHTML=''}
 function showOverlay(html){overlay.classList.remove('hidden');overlay.innerHTML=html}
-function setupMenu(){
- mode='menu';const earned=LEVELS.filter(l=>record.levels[l.id]).length;
- if(!isUnlocked(selectedLevel))selectedLevel=LEVELS.find(l=>isUnlocked(l.id)&&!record.levels[l.id])?.id||'1-1';
- const choices=LEVELS.map(l=>`<button class="campaignTile ${selectedLevel===l.id?'selected':''}" data-level="${l.id}" ${isUnlocked(l.id)?'':'disabled'}><span class="miniReward">${record.levels[l.id]?'★'.repeat(record.levels[l.id].stars)+' Cleared':isUnlocked(l.id)?'Ready to play':'LOCKED'}</span><strong>${l.id} · ${esc(l.title)}</strong><small>${esc(l.tag)}</small></button>`).join('');
- showOverlay(`<div class="panel narrow menuPanel"><div class="eyebrow">Royal Courtyard · 10-level campaign · v1.7.1</div><h1>Grammar Kingdom: Sentence Siege</h1><p>Complete ten Royal Courtyard battles, face Baron Blunder, and master fresh grammar challenges on every replay. Grammar practice boosts Ink and charges the Royal Quill Storm.</p><div class="campaignChoices">${choices}</div><div class="controls"><label for="grade"><strong>Practice level</strong></label><select id="grade"><option value="foundations">Foundations</option><option value="5">Grade 5</option><option value="6">Grade 6</option><option value="7">Grade 7</option><option value="8">Grade 8</option></select></div><div class="info"><strong>How to play</strong><br>Choose one of four defenders (1–4) and place it on grass. Ink grows automatically; complete Grammar Challenges (G) for bonus Ink and Grammar Power. Wrong answers halve the available Ink reward. Click a defender or its <strong>i</strong> for its Almanac. From Level 1-4 onward, retreat a placed defender for 40% Ink back. Level 1-5 uses only free wagon deliveries: no Ink purchasing and a three-card reserve limit. <strong>Veteran upgrades unlock after clearing 1-5:</strong> inspect a placed defender to upgrade it with Ink. No merging. Use <strong>Space</strong> or the purple Power meter to cast Royal Quill Storm; press <strong>P</strong> to pause.</div><div class="controls"><button class="button green" id="start">Play Level ${selectedLevel}</button><button class="button secondary" id="audio">Sound: ${soundOn?'ON':'OFF'}</button></div><small>${earned} of ${LEVELS.length} battles cleared · Progress saved on this browser. Grade-level questions are draft practice material for teacher review.</small></div>`);
- document.getElementById('grade').value=grade;document.getElementById('grade').onchange=e=>grade=e.target.value;
- for(const b of overlay.querySelectorAll('[data-level]'))b.onclick=()=>{selectedLevel=b.dataset.level;setupMenu()};
- document.getElementById('audio').onclick=()=>{soundOn=!soundOn;document.getElementById('audio').textContent='Sound: '+(soundOn?'ON':'OFF');clickSound()};
- document.getElementById('start').onclick=()=>startGame(selectedLevel);
-}
+ async function enterLandscapeFullscreen(){
+  const hint=document.getElementById('orientationHint');
+  let fullscreen=false;
+  try{if(document.documentElement.requestFullscreen&&!document.fullscreenElement){await document.documentElement.requestFullscreen();fullscreen=true}else fullscreen=!!document.fullscreenElement}catch{}
+  try{if(screen.orientation?.lock){await screen.orientation.lock('landscape');return}}catch{}
+  if(hint)hint.textContent=fullscreen?'Fullscreen is on. Rotate your phone sideways if it has not rotated.':'Rotate your phone sideways. This browser does not support forcing landscape.';
+ }
+ document.getElementById('rotateFull').addEventListener('click',enterLandscapeFullscreen);
+ document.getElementById('rotateSkip').addEventListener('click',()=>document.getElementById('orientationGate').classList.add('dismissed'));
+ window.addEventListener('orientationchange',()=>document.getElementById('orientationGate').classList.remove('dismissed'));
+ const WORLD_MAP=[
+  {name:'Royal Courtyard',short:'Courtyard',subtitle:'First defense',icon:'♜'},
+  {name:'Enchanted Forest',short:'Forest',subtitle:'Coming later',icon:'✦'},
+  {name:'Punctuation Port',short:'Port',subtitle:'Coming later',icon:'⚓'},
+  {name:'Sentence Forge',short:'Forge',subtitle:'Coming later',icon:'⚒'},
+  {name:'Grammar Citadel',short:'Citadel',subtitle:'Coming later',icon:'♛'}
+ ];
+ let selectedWorld=0,firstMenuOpen=true;
+ function setupMenu(){
+  mode='menu';
+  if(firstMenuOpen){selectedLevel=LEVELS.find(l=>isUnlocked(l.id)&&!record.levels[l.id])?.id||LEVELS[LEVELS.length-1].id;firstMenuOpen=false}
+  if(!isUnlocked(selectedLevel))selectedLevel=LEVELS.find(l=>isUnlocked(l.id)&&!record.levels[l.id])?.id||LEVELS[0].id;
+  const worldNo=selectedWorld+1, world= WORLD_MAP[selectedWorld];
+  const available=LEVELS.filter(l=>l.id.startsWith(worldNo+'-'));
+  const worldTabs=WORLD_MAP.map((w,i)=>{
+   const first=LEVELS.find(l=>l.id.startsWith((i+1)+'-'));
+   const availableNow=!!first&&isUnlocked(first.id);
+   return `<button class="worldTab ${i===selectedWorld?'active':''}" data-world="${i}" ${availableNow?'':'disabled'} aria-label="World ${i+1}: ${esc(w.name)}${availableNow?'':' (coming later)'}"><b>${i+1} · ${esc(w.short)}</b><small>${availableNow?(i===0?'10 stages · Play now':'Unlocked'):w.subtitle}</small></button>`
+  }).join('');
+  const choices=available.map(l=>`<button class="campaignTile ${selectedLevel===l.id?'selected':''}" data-level="${l.id}" ${isUnlocked(l.id)?'':'disabled'} aria-label="${esc(l.id+' '+l.title)}"><span class="miniReward">${record.levels[l.id]?'★'.repeat(record.levels[l.id].stars)+' Cleared':isUnlocked(l.id)?'Ready to play':'Locked'}</span><strong>${esc(l.id+' · '+l.title)}</strong><small>${esc(l.subtitle||l.tag)}</small></button>`).join('');
+  const mission=levelById(selectedLevel), earned=LEVELS.filter(l=>record.levels[l.id]).length;
+  const status=record.levels[mission.id]?'★'.repeat(record.levels[mission.id].stars)+' Completed':isUnlocked(mission.id)?'Ready to play':'Locked';
+  showOverlay(`<div class="panel menuPanel" role="dialog" aria-modal="true" aria-label="Choose your world and mission"><div class="menuHeading"><div><div class="eyebrow">World map · Royal Courtyard · v1.7.2</div><h1>Grammar Kingdom: Sentence Siege</h1><p>Choose your mission. Play to earn Ink, defend your castle, and practice fresh grammar challenges.</p></div><span class="crest" aria-hidden="true">♛</span></div><nav class="worldTabs" aria-label="Kingdom worlds">${worldTabs}</nav><div class="menuColumns"><section class="menuMissions"><div class="menuSectionLabel"><span>World ${worldNo}: ${esc(world.name)}</span><span>${available.filter(l=>record.levels[l.id]).length} / ${available.length||10} cleared</span></div><div class="campaignChoices">${choices||'<p class="missionLockedMsg">This world is coming in a future release.</p>'}</div></section><aside class="menuSide"><div class="selectedMission"><span class="missionTitle">Selected mission · ${esc(status)}</span><h2>${esc(mission.id)} · ${esc(mission.title)}</h2><p>${esc(mission.feature)}</p><p><strong>${mission.waves.length} waves</strong> · ${mission.active.length} active lanes${mission.boss?' · Final boss':''}</p></div><div class="playSettings"><label for="grade"><strong>ELA practice</strong></label><select id="grade"><option value="foundations">Foundations</option><option value="5">Grade 5</option><option value="6">Grade 6</option><option value="7">Grade 7</option><option value="8">Grade 8</option></select><button class="button secondary" id="audio" aria-label="Toggle sound">Sound: ${soundOn?'ON':'OFF'}</button></div><button class="button green" id="start">▶ Play Level ${esc(selectedLevel)}</button><div class="menuFoot"><details class="helpFold"><summary>How to play / controls</summary><div class="helpContents">Select a defender (keys 1–4), then tap an empty grass tile. Ink accumulates automatically. <strong>Grammar Challenge (G)</strong> awards bonus Ink and charges power; wrong guesses halve the reward. Inspect a placed defender to see stats, upgrade it, or retreat for Ink. <strong>Space</strong> casts Royal Quill Storm; <strong>P</strong> pauses. Level 1-5 uses a special free reinforcement wagon. Progress saves in this browser.</div></details><button id="fullscreen" type="button">⛶ Fullscreen</button></div></aside></div><div class="menuFoot"><span>${earned} of ${LEVELS.length} battles cleared · Questions are for ungraded practice pending teacher review.</span><span>Worlds 2–5 in development</span></div></div>`);
+  const gradeInput=document.getElementById('grade');gradeInput.value=grade;gradeInput.onchange=e=>{grade=e.target.value;try{localStorage.setItem('gk_practice_grade',grade)}catch{}};
+  for(const b of overlay.querySelectorAll('[data-level]'))b.onclick=()=>{selectedLevel=b.dataset.level;setupMenu()};
+  for(const b of overlay.querySelectorAll('[data-world]:not([disabled])'))b.onclick=()=>{selectedWorld=Number(b.dataset.world);selectedLevel=LEVELS.find(l=>l.id.startsWith((selectedWorld+1)+'-')&&isUnlocked(l.id)&&!record.levels[l.id])?.id||LEVELS.find(l=>l.id.startsWith((selectedWorld+1)+'-')&&isUnlocked(l.id))?.id||selectedLevel;setupMenu()};
+  document.getElementById('audio').onclick=()=>{soundOn=!soundOn;document.getElementById('audio').textContent='Sound: '+(soundOn?'ON':'OFF');clickSound()};
+  document.getElementById('fullscreen').onclick=enterLandscapeFullscreen;
+  document.getElementById('start').onclick=()=>startGame(selectedLevel);
+ }
 function makeSchedule(lvl){
  const first=[
  {t:5,type:'goblin',row:2},{t:13,type:'goblin',row:1},{t:20,type:'goblin',row:3},
@@ -492,8 +613,8 @@ function endGame(win){
 function pause(){
  if(!game)return;
  if(mode==='play'){
- mode='pause';showOverlay(`<div class="panel narrow"><div class="eyebrow">Battle paused</div><h2>${esc(level.title)}</h2><p>Wave ${game.wave} of ${level.waves.length} · ${Math.floor(game.time)} seconds · ${level.reinforcements?game.supply.reduce((a,b)=>a+b,0)+'/3 reserve cards':game.ink+' Ink'}</p><div class="info"><strong>Controls:</strong> 1–4 select a defender, click an open tile to place, G opens grammar practice, I inspects the selected defender, clicking an existing unit shows its health and its retreat option from 1-4 onward, Level 1-5 uses free wagon cards only (three-card reserve limit), Veteran upgrades unlock in 1-6 via the Almanac, Space casts a charged Royal Quill Storm, and P pauses.</div><div class="controls"><button class="button green" id="resume">Resume battle</button><button class="button secondary" id="sfx">Sound: ${soundOn?'ON':'OFF'}</button><button class="button secondary" id="restart">Restart level</button><button class="button secondary" id="back">Campaign Map</button></div></div>`);
- document.getElementById('resume').onclick=pause;document.getElementById('sfx').onclick=()=>{soundOn=!soundOn;document.getElementById('sfx').textContent='Sound: '+(soundOn?'ON':'OFF')};document.getElementById('restart').onclick=()=>startGame(level.id);document.getElementById('back').onclick=setupMenu;
+ mode='pause';showOverlay(`<div class="panel narrow"><div class="eyebrow">Battle paused</div><h2>${esc(level.title)}</h2><p>Wave ${game.wave} of ${level.waves.length} · ${Math.floor(game.time)} seconds · ${level.reinforcements?game.supply.reduce((a,b)=>a+b,0)+'/3 reserve cards':game.ink+' Ink'}</p><div class="info"><strong>Controls:</strong> 1–4 select a defender, click an open tile to place, G opens grammar practice, I inspects the selected defender, clicking an existing unit shows its health and its retreat option from 1-4 onward, Level 1-5 uses free wagon cards only (three-card reserve limit), Veteran upgrades unlock in 1-6 via the Almanac, Space casts a charged Royal Quill Storm, and P pauses.</div><div class="controls"><button class="button green" id="resume">Resume battle</button><button class="button secondary" id="sfx">Sound: ${soundOn?'ON':'OFF'}</button><button class="button secondary" id="pauseFullscreen">⛶ Fullscreen</button><button class="button secondary" id="restart">Restart level</button><button class="button secondary" id="back">Campaign Map</button></div></div>`);
+ document.getElementById('resume').onclick=pause;document.getElementById('sfx').onclick=()=>{soundOn=!soundOn;document.getElementById('sfx').textContent='Sound: '+(soundOn?'ON':'OFF')};document.getElementById('pauseFullscreen').onclick=enterLandscapeFullscreen;document.getElementById('restart').onclick=()=>startGame(level.id);document.getElementById('back').onclick=setupMenu;
  }else if(mode==='pause'){mode='play';hideOverlay()}
 }
 function panel(x,y,w,h,color,outline='#ab7841'){ctx.fillStyle=outline;ctx.fillRect(x,y,w,h);ctx.fillStyle=color;ctx.fillRect(x+3,y+3,w-6,h-6)}

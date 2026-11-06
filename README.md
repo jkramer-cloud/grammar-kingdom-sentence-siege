@@ -58,3 +58,13 @@ Progress and recently seen questions are stored locally in each browser. Progres
 ## Version notes
 
 **v1.7.1:** Clarifies 110 punctuation prompts and preserves the ten-level campaign, boss encounter, upgrade system, artwork, and save compatibility with existing same-origin deployments.
+
+
+## v1.7.2 World Map and Mobile UI
+
+- Replaced the scrollable start popup with a five-world selector and a 10-mission grid for each world (World 1 playable; Worlds 2–5 clearly identified as future expansions).
+- Progress automatically highlights the first unlocked unfinished mission on opening.
+- Simplified menus and moved the full rules into a collapsible Help section.
+- Filled outer black letterbox areas with blurred, decorative artwork from the existing battlefield; core game artwork and gameplay remain unchanged.
+- Added a portrait-device rotation prompt plus optional fullscreen / landscape orientation request. This only locks orientation on browsers that support it; some iPhone/iPad browsers do not. Landscape play itself does not require lock support.
+- Preserved saves, all 10 levels, question bank, boss battle, upgrades, and defender retreat.
