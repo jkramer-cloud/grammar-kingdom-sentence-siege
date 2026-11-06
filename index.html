@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Grammar Kingdom: Sentence Siege — v1.7.2 World Map & Mobile</title>
+<title>Grammar Kingdom: Sentence Siege — v1.7.3 Live Ink Production</title>
 <style>
 :root{color-scheme:dark;--gold:#f6cd71;--navy:#1c213b;--paper:#f8e5b6;--ink:#33251d;--purple:#7824a6}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0d1328;color:#fff;font-family:Trebuchet MS,Arial,sans-serif;overflow:hidden}
@@ -174,6 +174,16 @@ const VETERAN=[
 function veteranUnlocked(){return !level.reinforcements&&(!!record.levels['1-5']||Number(level.id.slice(2))>=6)}
 function unitStats(type,tier=1){const d=DEF[type];return tier>=2?{...d,...VETERAN[type],income:VETERAN[type].income??25,splash:VETERAN[type].splash??90}:{...d,income:25,splash:90}}
 function refundFor(u){return Math.floor(Math.max(0,u.invested||0)*.4/5)*5}
+// The top HUD uses a truthful average rate: Ink arrives in separate timed payments,
+// so this value describes expected production per second, not a continuous trickle.
+// Dead or retreated Scribes are excluded; Veteran income uses that unit's live tier.
+function inkProduction(g){
+ const scribes=g.defs.filter(u=>u.type===2&&u.hp>0);
+ const base=level.reinforcements?0:10/8;
+ const fromScribes=level.reinforcements?0:scribes.reduce((sum,u)=>{const stats=unitStats(u.type,u.tier);return sum+stats.income/stats.interval},0);
+ return {base,fromScribes,total:base+fromScribes,count:scribes.length};
+}
+
 
 const PROFILE={
 archer:{role:'Ranged attacker',strength:'Accurate, steady damage against single foes. An inexpensive and dependable first defense.',weakness:'Low health; struggles with groups or heavily armored enemies if left alone.',tip:'Place behind a Shield Squire. Two Archers in the same lane provide reliable coverage.',special:'Fires one 28-damage quill about every 1.55 seconds.'},
@@ -674,7 +684,22 @@ ctx.save();const titleShade=ctx.createLinearGradient(0,8,0,51);titleShade.addCol
 // Draw main play HUD values over static reference numerals.
 if(level.reinforcements){
  panel(415,16,117,98,'#1a2340','#b99a5b');txt('RESERVE',473,34,17,'#fbe6b3','#1a2340','center');txt(g.supply.reduce((a,b)=>a+b,0)+' / 3',473,72,32,'#fff3a0','#2a1830','center');txt('WAGON ONLY',473,101,13,'#8deca3','#1a2340','center');
- }else{panel(421,45,102,68,'#1a2340','#1a2340');txt(String(g.ink),471,76,39,'#fff3a0','#2a1830','center');txt('+10 / 8s',471,103,16,'#8deca3','#1a2340','center');}
+ }else{
+ const income=inkProduction(g);
+ // Update the small number on the original Ink counter and add an unobtrusive
+ // illustrated production readout just below it.
+ panel(421,45,102,68,'#1a2340','#1a2340');
+ txt(String(g.ink),471,76,39,'#fff3a0','#2a1830','center');
+ txt('+'+income.total.toFixed(2)+'/s',471,102,16,'#b4ffac','#1a2340','center');
+ ctx.save();
+ ctx.shadowColor='#071428';ctx.shadowBlur=8;
+ panel(347,122,328,66,'#24243b','#dbb46d');
+ ctx.shadowBlur=0;
+ txt('INK PRODUCTION  ·  AVG',511,135,14,'#ffdfa0','#201425','center');
+ txt('Base +'+income.base.toFixed(2)+'/s   ·   Scribes +'+income.fromScribes.toFixed(2)+'/s',511,156,16,'#e1e4ff','#201425','center');
+ txt('TOTAL  +'+income.total.toFixed(2)+' INK / SEC',511,178,18,'#a8fca9','#201425','center');
+ ctx.restore();
+}
 if(g.boss){const bx=600,by=113,bw=460,pct=Math.max(0,g.boss.hp/g.boss.maxhp);ctx.save();
  ctx.fillStyle='#251025';ctx.beginPath();ctx.roundRect(bx,by,bw,32,8);ctx.fill();ctx.strokeStyle='#d5a75f';ctx.lineWidth=3;ctx.stroke();
  ctx.fillStyle='#69132d';ctx.fillRect(bx+5,by+5,(bw-10),22);ctx.fillStyle=g.boss.phase>=3?'#ff8e3a':'#e04a65';ctx.fillRect(bx+5,by+5,(bw-10)*pct,22);
